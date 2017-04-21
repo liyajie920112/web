@@ -109,3 +109,31 @@ function chunk(arr, size) {
 chunk(["a", "b", "c", "d",'e'], 2);// 打印出 [['a','b'],['c','d'],['e']]
 ```
 
+## Caesars Cipher
+- 凯撒密码, 又称: 移位密码
+- 常见的案例就是ROT13, 字母会移动13个位置: A <-> N 交换, B <-> O 交换
+示例
+
+```js
+rot13("SERR PBQR PNZC") 应该解码为 "FREE CODE CAMP"
+```
+
+解析:
+```js
+function rot13(str) { // LBH QVQ VG!
+  var result = '';
+  for(var i = 0, len = str.length; i< len; i++){
+    var _str = str[i];
+    var char = _str.charCodeAt();
+    if(char >= 65 && char <= 90){
+      // 78 说明是65 + 13, 如果小于78, 说明是0-13索引的字母, 只能+13才能取到后面的字母
+      _str = String.fromCharCode(char < 78 ? char + 13 : char - 13);
+    }
+    result += _str;
+  }
+  return result;
+}
+
+// Change the inputs below to test
+rot13("SERR PBQR PNZC");//FREE CODE CAMP
+```
