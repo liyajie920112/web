@@ -17,9 +17,9 @@ xhr.onreadystatechange = function(){
         if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
             // 这里说明请求成功了
             // 这里执行成功回调
+            console.log(xhr.responseText);// 打印服务器的响应信息.
         }
     }
-    console.log(xhr.responseText);// 打印服务器的响应信息.
 }
 ```
 
