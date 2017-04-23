@@ -164,4 +164,8 @@ for (var i = 0, len = points.length; i < len; i++) {
 }
 cgx.stroke();
 ```
+
+<p data-height="265" data-theme-id="light" data-slug-hash="EmyRqj" data-default-tab="html" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-coordinate" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/EmyRqj/">canvas-coordinate</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
 [点击此处查看Demo](https://codepen.io/liyajie/pen/EmyRqj)
