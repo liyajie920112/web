@@ -7,7 +7,7 @@
     - [单例模式](document/jsdesignpatterns/03singleton-model)
     - [观察者模式](document/jsdesignpatterns/04observer-model)
 - [闭包与内存管理和高阶函数](document/closure-memory-function.md)
-- [Canvas自学](document/canvas-1)
+- [Canvas](document/canvas-1)
 - [SVG](document/svg)
 - [原型链](document/prototype)
 - [Object相关](document/object)
