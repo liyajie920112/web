@@ -91,6 +91,7 @@ var rows = parseInt(canvasHeight / rowHeight);
 // 计算供多少列
 var cols = parseInt(canvasWidth / colWidth);
 
+// 实现线不模糊的效果
 cgx.translate(0.5, 0.5);
 
 // 绘制行
@@ -117,10 +118,13 @@ for (var i = 1, len = cols; i < len; i++) {
 // 坐标轴原点
 var ox = 40,
     oy = canvasHeight - ox;
+//设置坐标系宽高
 var ow = 400,
-    oh = 300; //设置坐标系宽高
+    oh = 300; 
+// 设置y轴结束的位置 x,y
 var yEndy = oy - oh,
     yEndx = ox;
+// 设置x轴结束的位置 x,y
 var xEndy = oy,
     xEndx = ox + ow;
 // 划y轴
