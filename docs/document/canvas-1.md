@@ -66,3 +66,98 @@ cgx.strokeStyle='red';
 cgx.closePath();
 cgx.stroke();
 ```
+## 案例四 画坐标系
+
+```css
+canvas { border:1px solid #0094ff; }
+```
+```html
+<canvas id='canvas' width='600' height='400'></canvas>
+```
+```js
+var canvas = document.getElementById('canvas');
+var cgx = canvas.getContext('2d');
+// 行高 5
+var rowHeight = 8;
+// 列宽 5
+var colWidth = 8;
+// canvas 宽度和高度
+var canvasWidth = canvas.width;
+var canvasHeight = canvas.height;
+
+// 计算共多少行
+var rows = parseInt(canvasHeight / rowHeight);
+
+// 计算供多少列
+var cols = parseInt(canvasWidth / colWidth);
+
+cgx.translate(0.5, 0.5);
+
+// 绘制行
+for (var i = 1, len = rows; i < len; i++) {
+    cgx.beginPath();
+    cgx.moveTo(0, i * rowHeight);
+    cgx.lineTo(canvasWidth, i * rowHeight);
+    cgx.lineWidth = 0.5;
+    cgx.strokeStyle = '#ff6440';
+    cgx.stroke();
+}
+
+// 绘制列
+for (var i = 1, len = cols; i < len; i++) {
+    cgx.beginPath();
+    cgx.moveTo(i * colWidth, 0);
+    cgx.lineTo(i * rowHeight, canvasHeight);
+    cgx.lineWidth = 0.5;
+    cgx.stroke();
+}
+
+// 绘制坐标轴
+
+// 坐标轴原点
+var ox = 40,
+    oy = canvasHeight - ox;
+var ow = 400,
+    oh = 300; //设置坐标系宽高
+var yEndy = oy - oh,
+    yEndx = ox;
+var xEndy = oy,
+    xEndx = ox + ow;
+// 划y轴
+cgx.beginPath();
+cgx.moveTo(ox, oy);
+cgx.lineTo(yEndx, yEndy);
+// 画箭头
+cgx.lineTo(yEndx - 8, yEndy + 8);
+cgx.lineTo(yEndx, yEndy);
+cgx.lineTo(yEndx + 8, yEndy + 8);
+
+cgx.lineWidth = 2;
+cgx.strokeStyle = 'green';
+
+cgx.stroke();
+
+// 画x轴
+cgx.beginPath();
+cgx.moveTo(ox, oy);
+cgx.lineTo(xEndx, xEndy);
+// 画箭头
+cgx.lineTo(xEndx - 8, xEndy - 8);
+cgx.lineTo(xEndx, xEndy);
+cgx.lineTo(xEndx - 8, xEndy + 8);
+cgx.stroke();
+
+// 画折线
+// 设置点的数组
+var points = [20, 30, 100, 80, 150,90,10,100];
+// 计算x轴上每个点的间距
+var marginWidth = parseInt(ow / points.length);
+cgx.beginPath();
+cgx.moveTo(ox, oy);
+// 开始画线
+for (var i = 0, len = points.length; i < len; i++) {
+    cgx.lineTo(ox + ((i+1) * marginWidth), oy - points[i]);
+}
+cgx.stroke();
+```
+[点击此处查看Demo](https://codepen.io/liyajie/pen/EmyRqj)
