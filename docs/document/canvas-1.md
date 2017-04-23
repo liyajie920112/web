@@ -3,10 +3,17 @@
 ## 什么是Canvas
 - 说明: canvas是HTML5提供的一个新标签, `<canvas></canvas>`
 
+## 角度和弧度的换算
+
+- 1° = 2πr / 360 弧长
+- 1° = 2π / 360  弧度
+
+?> 弧度就是把圆的 周长(2πr) 平均分成r份, 每一份就是一弧度 `2πr / r = 2π`
+
 ## Canvas默认
 - 默认宽高: 300 x 150
 
-## 案例一 划线
+## 案例一 划线 `ctx.lintTo(x,y)`
 ```html
 <canvas id='demo' width='200' height='200'></canvas>
 ```
@@ -169,3 +176,151 @@ cgx.stroke();
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 [点击此处查看Demo](https://codepen.io/liyajie/pen/EmyRqj)
+
+## 案例五 画矩形`ctx.rect(x,y,width,height)`
+
+```js
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+// 方式一
+// ctx.rect(x,y,width,height);
+ctx.rect(10,10,200,100);
+ctx.lineWidth = 5;
+ctx.stroke();
+
+// 方式二
+// ctx.fillRect(x,y, width, height);
+ctx.fillRect(10,150,200,100); // 这种方式会默认填充颜色, 颜色为黑色
+
+// 方式三
+// ctx.strokeRect(x,y, width, height);
+ctx.strokeRect(10,300,200,100);// 这种方式会默认描边
+```
+
+## 案例六 画圆弧 `ctx,arc(x,y,r,初始弧度,弧度,是否是逆时针)`
+
+?> 角度转弧度 `弧度 = 角度 * Math.PI / 180`
+
+```js
+var canvas = document.getElementById('canvas');
+var cgx = canvas.getContext('2d');
+// cgx.arc(x,y,r,偏移弧度,弧度,是否是顺时针) false: 顺时针(默认), true: 逆时针
+cgx.arc(200,200,100,10 * Math.PI / 180, 90 * Math.PI / 180,false)
+cgx.stroke();
+```
+
+## 非零正交原则
+
+非零正交原则示例图
+
+![非零正交原则示例图](/document/images/canvas001.jpg)
+
+> 非零环绕规则：
+
+对于路径中指定范围区域，从该区域内部画一条足够长的线段，使此线段的完全落在路径范围之外。
+
+> 非零环绕规则计数器：
+
+然后，将计数器初始化为0，每当这个线段与路径上的直线或曲线相交时，就改变计数器的值，如果是与路径顺时针相交时，那么计数器就加1， 如果是与路径逆时针相交时，那么计数器就减1.
+如果计数器始终不为0，那么此区域就在路径范围里面，在调用fill()方法时，浏览器就会对其进行填充。如果最终值是0，那么此区域就不在路径范围内，浏览器就不会对其进行填充。
+
+> 从上图中看
+
+第一条线段：根据非零环绕规则，这条直线只经过路径一次且路径是逆时针方向，那么计数器为-1;根据浏览器对计数器的计算原理得出，当调用fill()方法时浏览器会填充此区域。
+
+第二条线段：根据非零环绕规则，这条直线经过路径二次且路径都是逆时针方向，那么计数器为-2;根据浏览器对计数器的计算原理得出，当调用fill()方法时浏览器会填充此区域。
+
+第三条线段：根据非零环绕规则，这条直线经过路径二次;第一次经过的路径是逆时针方向，计数器则为-1; 第二次经过的路径是顺时针方向，计数器为1;原因计数器的最终值为0-1+1 = 0;所以根据浏览器对计数器的计算原理得出，当调用fill()方法时浏览器不会填充此区域
+
+> 使用非零正交原则画一个圆环
+
+```js
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+ctx.arc(200,200,200,0, 360 * Math.PI / 180,false);// 顺时针
+ctx.arc(200,200,100,0, 360 * Math.PI / 180,true);// 逆时针
+ctx.fillStyle = '#0094ff';
+ctx.fill();
+```
+
+## 绘制文本`ctx.fillText` `ctx.strokeText`
+
+```js
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+// 设置字体大小
+ctx.font = '80px Arial';
+
+// 设置阴影
+ctx.shadowStyle = 'green';
+
+// 设置阴影模糊度
+ctx.shadowBlur = 10;
+
+// 设置阴影偏移
+ctx.shadowOffsetX = 5;
+ctx.shadowOffsetY = 5;
+
+// 设置垂直方向上的基线
+ctx.textBaseline = 'top';
+
+// 绘制一个填充文本
+ctx.fillStyle = '#0094ff';
+ctx.fillText('Hello World',20,20);
+
+// 绘制一个空心文本
+ctx.strokeStyle = '#ff6666';
+ctx.strokeText('Hello World', 20,100);
+```
+
+>`ctx.textBaseline`
+
+- alphabetic	默认。文本基线是普通的字母基线。
+- top	文本基线是 em 方框的顶端。
+- hanging	文本基线是悬挂基线。
+- middle	文本基线是 em 方框的正中。
+- ideographic	文本基线是表意基线。
+- bottom	文本基线是 em 方框的底端。
+
+> `ctx.textAlign`
+
+- start	默认。文本在指定的位置开始。
+- end	文本在指定的位置结束。
+- center	文本的中心被放置在指定的位置。
+- left	文本左对齐。
+- right	文本右对齐。
+
+## 绘制图片 `ctx.drawImage`
+
+> 绘制图片
+
+```js
+var img = new Image();
+img.src = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493554050&di=0f914f222af2cb5f44fd5880971c9a5c&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.carvenus.com%2Fim%2Fnews%2F2014%2F04%2F140416_n01a.jpg';
+
+var w = 300;
+img.onload = function(){
+    // 等比例计算宽高
+    var h = this.height / this.width / w;
+    ctx.drawImage(this,0,0,w,h);
+}
+```
+> 裁剪图片
+
+!> 截图是针对原图大小来截
+
+```js
+var img = new Image();
+img.src = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493554050&di=0f914f222af2cb5f44fd5880971c9a5c&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.carvenus.com%2Fim%2Fnews%2F2014%2F04%2F140416_n01a.jpg';
+
+// ctx.drawImage(img对象, 开始截图的x位置,开始截图的y,截图的宽,截图的高, 截完之后的图的x,截完之后的图的y,截完之后的图的宽,截完之后的图的高);
+// 第2个~第5个参数说的是截图的 位置和宽高
+// 第6个~第9个参数说的是截完的图的 位置和宽高
+img.onload = function(){
+    ctx.drawImage(this,0,0,100,100,90,80,120,120);
+}
+```
+
