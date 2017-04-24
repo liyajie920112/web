@@ -6,8 +6,10 @@
     - [工厂模式](document/jsdesignpatterns/02factory-model)
     - [单例模式](document/jsdesignpatterns/03singleton-model)
     - [观察者模式](document/jsdesignpatterns/04observer-model)
-- [闭包与内存管理和高阶函数](document/closure-memory-function.md)
-- [Canvas](document/canvas-1)
+- [闭包与内存管理和高阶函数](document/closure-memory-function)
+- **Canvas**
+    - [Canvas画基本图形](document/canvas/canvas001)
+    - [Canvas渐变和变换](document/canvas/canvas002)
 - [SVG](document/svg)
 - [原型链](document/prototype)
 - [Object相关](document/object)

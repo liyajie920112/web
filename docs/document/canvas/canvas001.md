@@ -179,6 +179,8 @@ cgx.stroke();
 
 ## 案例五 画矩形`ctx.rect(x,y,width,height)`
 
+!> 清空矩形内容 ctx.clearRect(x,y,width,height);
+
 ```js
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -214,7 +216,7 @@ cgx.stroke();
 
 非零正交原则示例图
 
-![非零正交原则示例图](/document/images/canvas001.jpg)
+![非零正交原则示例图](/document/images/canvas/canvas001.jpg)
 
 > 非零环绕规则：
 
@@ -269,7 +271,7 @@ ctx.textBaseline = 'top';
 
 // 绘制一个填充文本
 ctx.fillStyle = '#0094ff';
-ctx.fillText('Hello World',20,20);
+ctx.fillText('Hello World',20,20);// 20,20 代表的是位置, 左下角的位置
 
 // 绘制一个空心文本
 ctx.strokeStyle = '#ff6666';
