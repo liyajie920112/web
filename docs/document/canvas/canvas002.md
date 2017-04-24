@@ -7,7 +7,7 @@ gradient.addColorStop(0,'red');
 gradient.addColorStop(1,'blue');
 // 将渐变
 ctx.fillStyle = gradient;
-ctx.fill();
+ctx.fill(); 
 ```
 下图是个线性渐变
 
