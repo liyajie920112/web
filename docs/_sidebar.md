@@ -30,4 +30,4 @@
 - [ES6(ES2015)](ES6)
 - [VUEUI组件](document/vueui.md)
 - [常见面试知识点](document/interview)
-- [作业](document/work)
+- [特效和小游戏](document/beautiful)
