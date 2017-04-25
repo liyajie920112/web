@@ -42,7 +42,8 @@ ctx.fill();
 
 ## 变换(transform)
 
-[Demo地址](https://codepen.io/liyajie/pen/EmgZEy);
+<iframe height='377' scrolling='no' title='canvas-transform' src='//codepen.io/liyajie/embed/EmgZEy/?height=377&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/liyajie/pen/EmgZEy/'>canvas-transform</a> by liyajie (<a href='http://codepen.io/liyajie'>@liyajie</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ## 裁剪区域(context.clip)
 
@@ -158,16 +159,12 @@ console.log(base64);
 
 - 该案例主要用到的是合成属性`globalCompositeOperation`
 
-<p data-height="265" data-theme-id="light" data-slug-hash="OmbVyy" data-default-tab="result" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-刮奖" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/OmbVyy/">canvas-刮奖</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
-
+<iframe height='202' scrolling='no' title='canvas-刮奖' src='//codepen.io/liyajie/embed/OmbVyy/?height=202&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/liyajie/pen/OmbVyy/'>canvas-刮奖</a> by liyajie (<a href='http://codepen.io/liyajie'>@liyajie</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
 
 ## 时钟效果 纯Canvas
 
 ?> 重点是时间的换算, 角度的换算
-
-<p data-height="525" data-theme-id="light" data-slug-hash="dWOovB" data-default-tab="result" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-Clock" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/dWOovB/">canvas-Clock</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 <iframe height='525' scrolling='no' title='canvas-Clock' src='//codepen.io/liyajie/embed/dWOovB/?height=525&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/liyajie/pen/dWOovB/'>canvas-Clock</a> by liyajie (<a href='http://codepen.io/liyajie'>@liyajie</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
