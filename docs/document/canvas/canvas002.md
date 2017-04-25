@@ -169,3 +169,5 @@ console.log(base64);
 <p data-height="525" data-theme-id="light" data-slug-hash="dWOovB" data-default-tab="result" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-Clock" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/dWOovB/">canvas-Clock</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
+<iframe height='525' scrolling='no' title='canvas-Clock' src='//codepen.io/liyajie/embed/dWOovB/?height=525&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/liyajie/pen/dWOovB/'>canvas-Clock</a> by liyajie (<a href='http://codepen.io/liyajie'>@liyajie</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
