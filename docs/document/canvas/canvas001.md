@@ -280,6 +280,8 @@ ctx.strokeText('Hello World', 20,100);
 
 >`ctx.textBaseline`
 
+![](/document/images/canvas/textbaseline.png)
+
 - alphabetic	默认。文本基线是普通的字母基线。
 - top	文本基线是 em 方框的顶端。
 - hanging	文本基线是悬挂基线。
@@ -288,6 +290,8 @@ ctx.strokeText('Hello World', 20,100);
 - bottom	文本基线是 em 方框的底端。
 
 > `ctx.textAlign`
+
+![](/document/images/canvas/textalign.png)
 
 - start	默认。文本在指定的位置开始。
 - end	文本在指定的位置结束。
@@ -326,3 +330,20 @@ img.onload = function(){
 }
 ```
 
+## 阴影 `context.shadowColor`
+
+```js
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+// 设置阴影颜色
+ctx.shadowColor = 'red';
+// 设置阴影模糊度
+ctx.shadowBlur = 10;
+// 设置阴影的偏移
+ctx.shadowOffsetX = 10;
+ctx.shadowOffsetY = 10;
+
+ctx.fillStyle = 'yellow';
+ctx.fill();
+```

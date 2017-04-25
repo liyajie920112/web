@@ -67,8 +67,18 @@ img.onload = function(){
 
 ## 将图片转换成base64字符串
 
+```js
+var canvas = document.getElementById('canvas');
+// 参数一: 图片格式
+// 参数二: 图片质量
+var base64 = canvas.toDataURL('image/jpeg',1);
+
+console.log(base64);
+```
+
 ## Canvas性能优化
 - 将小画布画到大画布上.
+
 
 ## 合成属性 `context.globalCompositeOperation`
 
@@ -146,5 +156,16 @@ img.onload = function(){
 
 ## 刮刮卡案例
 
+- 该案例主要用到的是合成属性`globalCompositeOperation`
 
+<p data-height="265" data-theme-id="light" data-slug-hash="OmbVyy" data-default-tab="result" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-刮奖" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/OmbVyy/">canvas-刮奖</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+
+## 时钟效果 纯Canvas
+
+?> 重点是时间的换算, 角度的换算
+
+<p data-height="525" data-theme-id="light" data-slug-hash="dWOovB" data-default-tab="result" data-user="liyajie" data-embed-version="2" data-pen-title="canvas-Clock" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/dWOovB/">canvas-Clock</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
