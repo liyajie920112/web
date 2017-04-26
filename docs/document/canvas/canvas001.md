@@ -33,6 +33,31 @@ cgx.stroke();
 ```
 !> 注意点: 如果通过css设置`canvas`宽高, `canvas`中所画的东西会被放大或缩小.我们要通过属性的方式来给`canvas`设置宽高.
 
+## 线条的属性
+
+### lineCap
+- 结束线帽
+- butt(默认): 向线条的末端添加平直的边缘
+- round: 向每个末端添加圆形线帽
+- square: 向每个末端添加正方形线帽
+
+<script async src="//jsrun.net/X5kKp/embed/all/light/"></script>
+
+### lineJoin
+
+- 线条之间的连接方式
+- miter(默认): 尖角
+- bevel: 斜角
+- round: 圆角
+
+<script async src="//jsrun.net/y5kKp/embed/all/light/"></script>
+
+### miterLimit (context.miterLimit)
+- 就是下图中 黑色实线顶点到虚线顶点 的距离
+- 一般设置很尖锐的角的时候才会用到
+- 默认值 10
+![](/document/images/canvas/miterlimit.png)
+
 ## 案例二 划线, 画新线`cgx.beginPath()`
 
 ```html
@@ -211,6 +236,14 @@ var cgx = canvas.getContext('2d');
 cgx.arc(200,200,100,10 * Math.PI / 180, 90 * Math.PI / 180,false)
 cgx.stroke();
 ```
+
+## 画圆弧`context.arcTo`
+
+![](/document/images/canvas/arcto.png)
+
+<script async src="//jsrun.net/f5kKp/embed/all/light/"></script>
+
+!> arcTo的x1,y1不是圆弧的结束坐标位置, 圆弧的开始位置和结束位置是两条切线的切点位置.
 
 ## 非零正交原则
 
