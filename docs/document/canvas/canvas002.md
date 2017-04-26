@@ -168,3 +168,8 @@ console.log(base64);
 
 <iframe height='525' scrolling='no' title='canvas-Clock' src='//codepen.io/liyajie/embed/dWOovB/?height=525&theme-id=light&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/liyajie/pen/dWOovB/'>canvas-Clock</a> by liyajie (<a href='http://codepen.io/liyajie'>@liyajie</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
+
+
+## Canvas 画一个五角星
+
+<script async src="//jsrun.net/XHkKp/embed/all/light/"></script>
