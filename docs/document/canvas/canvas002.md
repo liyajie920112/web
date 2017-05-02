@@ -80,6 +80,9 @@ console.log(base64);
 ## Canvas性能优化
 - 将小画布画到大画布上.
 
+## 设置画布透明度 globalAlpha
+
+- `context.globalAlpha(0~1)`
 
 ## 合成属性 `context.globalCompositeOperation`
 

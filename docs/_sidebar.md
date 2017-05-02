@@ -27,7 +27,9 @@
 - [Common规范](document/commonjs.md)
 - [前端工具篇](document/tool.md)
 - [CSS](document/css.md)
-- [ES6(ES2015)](ES6)
+- [ES6(ES2015)](document/ES6)
 - [VUEUI组件](document/vueui.md)
+- **前端项目**
+    - [webapp书城](projects/webapp-book)
 - [常见面试知识点](document/interview)
 - [特效和小游戏](document/beautiful)
