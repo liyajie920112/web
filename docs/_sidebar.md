@@ -1,4 +1,5 @@
 - [文档简介]()
+- [Flex布局](document/flex)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**
@@ -19,6 +20,7 @@
 - [jQuery原理](document/jquery-theory)
 - [JS兼容性问题](document/compatibility)
 - [Ajax](document/ajax.md)
+- [前端框架](document/web-framework.md)
 - [基础算法](document/basic-algorithm)
 - **CSharp(C#)**
     - [NPOI基础](document/csharp/npoi.md)
@@ -29,7 +31,5 @@
 - [CSS](document/css.md)
 - [ES6(ES2015)](document/ES6)
 - [VUEUI组件](document/vueui.md)
-- **前端项目**
-    - [webapp书城](projects/webapp-book)
 - [常见面试知识点](document/interview)
 - [特效和小游戏](document/beautiful)
