@@ -1,5 +1,7 @@
 - [文档简介]()
-- [Flex布局](document/flex)
+- **CSS3**
+    - [media查询](document/media)
+    - [Flex布局](document/flex)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**
