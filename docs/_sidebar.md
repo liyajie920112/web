@@ -1,7 +1,9 @@
 - [文档简介]()
 - **CSS3**
-    - [media查询](document/media)
-    - [Flex布局](document/flex)
+    - [media查询](document/css3/media)
+    - [Flex布局](document/css3/flex)
+    - [CSS基本问题](document/css3/base)
+- [ES6(ES2015)](document/ES6)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**
@@ -30,8 +32,6 @@
     - [NPOI操作Excel二](document/csharp/npoi-excel2.md)
 - [Common规范](document/commonjs.md)
 - [前端工具篇](document/tool.md)
-- [CSS](document/css.md)
-- [ES6(ES2015)](document/ES6)
 - [VUEUI组件](document/vueui.md)
 - [常见面试知识点](document/interview)
 - [特效和小游戏](document/beautiful)

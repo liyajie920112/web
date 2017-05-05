@@ -22,7 +22,7 @@
 语法：
 ```css
 word-break : normal | break-all | keep-all
-````
+```
 
 参数：
 
