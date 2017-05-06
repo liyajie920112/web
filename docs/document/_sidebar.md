@@ -3,7 +3,8 @@
     - [media查询](document/css3/media)
     - [Flex布局](document/css3/flex)
     - [CSS基本问题](document/css3/base)
-- [ES6(ES2015)](document/ES6)
+- **ES6**
+    - [Class类&Allow Functions](document/es6/class)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**

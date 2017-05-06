@@ -305,3 +305,52 @@ stu.setName('lll');//stu.setName is not a function
 ```
 
 ### this的指向
+- 类的方法内部如果含有this, 它默认指向类的实例, 但是使用的时候一定要非常小心, 一旦单独使用该方法, 可能会报错.
+
+```js
+class Student{
+    printName(name = 'liyajie'){
+        this.print(`Hello ${name}`);
+    }
+    print(text){
+        console.log(text);
+    }
+}
+// 调用
+const stu = new Student();
+stu.printName();// Hello liyajie
+
+const { printName } = stu;
+printName();// Cannot read property 'print' of undefined 说明没有print这个属性
+```
+报错原因: printName中的this默认指向当前类(Student)的实例. 但是将这个方法单独提取出来使用, this会指向该方法运行时的环境, 因为找不到print方法而导致报错.
+
+> 解决方式一, 在构造方法中使用bind修改this指向
+
+```js
+class Student{
+    constructor(){
+        this.printName = this.printName.bind(this);
+    }
+    // ...
+}
+```
+这样在创建对象的时候printName方法每次调用都会使用this去调用
+
+> 解决方式二, 使用箭头函数
+
+```js
+class Student{
+    constructor(){
+        this.printName = (name = 'liyajie') => {
+            this.print(`Hello ${name}`);
+        }
+    }
+    print(text){
+        console.log(text);
+    }
+}
+```
+
+> 解决方式三, 使用Proxy, 获取方法的时候自动绑定this.
+
