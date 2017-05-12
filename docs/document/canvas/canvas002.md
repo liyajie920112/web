@@ -175,4 +175,5 @@ console.log(base64);
 
 ## Canvas 画一个五角星
 
-<script async src="//jsrun.net/XHkKp/embed/all/light/"></script>
+<p data-height="371" data-theme-id="light" data-slug-hash="wdmNBw" data-default-tab="js,result" data-user="liyajie" data-embed-version="2" data-pen-title="Canvas Star" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/wdmNBw/">Canvas Star</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
