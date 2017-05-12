@@ -41,7 +41,8 @@ cgx.stroke();
 - round: 向每个末端添加圆形线帽
 - square: 向每个末端添加正方形线帽
 
-<script async src="//jsrun.net/X5kKp/embed/all/light/"></script>
+<p data-height="221" data-theme-id="light" data-slug-hash="wdmRLV" data-default-tab="js,result" data-user="liyajie" data-embed-version="2" data-pen-title="Canvas lineCap" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/wdmRLV/">Canvas lineCap</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 ### lineJoin
 
@@ -50,7 +51,8 @@ cgx.stroke();
 - bevel: 斜角
 - round: 圆角
 
-<script async src="//jsrun.net/y5kKp/embed/all/light/"></script>
+<p data-height="467" data-theme-id="light" data-slug-hash="NjYoKW" data-default-tab="js,result" data-user="liyajie" data-embed-version="2" data-pen-title="Canvas lineJoin" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/NjYoKW/">Canvas lineJoin</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 ### miterLimit (context.miterLimit)
 - 就是下图中 黑色实线顶点到虚线顶点 的距离
@@ -241,7 +243,8 @@ cgx.stroke();
 
 ![](/document/images/canvas/arcto.png)
 
-<script async src="//jsrun.net/f5kKp/embed/all/light/"></script>
+<p data-height="358" data-theme-id="light" data-slug-hash="KmoJKV" data-default-tab="js,result" data-user="liyajie" data-embed-version="2" data-pen-title="Canvas arcTo" class="codepen">See the Pen <a href="https://codepen.io/liyajie/pen/KmoJKV/">Canvas arcTo</a> by liyajie (<a href="http://codepen.io/liyajie">@liyajie</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 !> arcTo的x1,y1不是圆弧的结束坐标位置, 圆弧的开始位置和结束位置是两条切线的切点位置.
 
