@@ -6,8 +6,8 @@
 - **ES6**
     - [Class类&Allow Functions](document/es6/class)
 - **Git**
-    - [Git命令](document/git/git01)
-    - [Git命令](document/git/git02)
+    - [Git命令-V1](document/git/git01)
+    - [Git命令-V2](document/git/git02)
 - [Webpack](document/webpack/webpack)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
