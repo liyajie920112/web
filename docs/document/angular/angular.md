@@ -17,7 +17,7 @@
 ## Angular过滤器
 
 - 日期过滤器
-    - date:'yyyy/MM/dd HH:mm:ss'
+    - `date:'yyyy/MM/dd HH:mm:ss'`
 - 转大写
     - uppercase
 - 取前多少位
