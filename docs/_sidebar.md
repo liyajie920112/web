@@ -9,6 +9,8 @@
     - [Git命令-V1](document/git/git01)
     - [Git命令-V2](document/git/git02)
 - [Webpack](document/webpack/webpack)
+- [Gulp](document/gulp/gulp)
+- [Angular 1.x](document/angular/angular)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**
