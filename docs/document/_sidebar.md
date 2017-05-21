@@ -11,6 +11,9 @@
 - [Webpack](document/webpack/webpack)
 - [Gulp](document/gulp/gulp)
 - [Angular 1.x](document/angular/angular)
+- **TypeScript**
+    - [TypeScript基础](document/typescript/base-typescript)
+    - [TypeScript进阶](document/typescript/advance-typescript)
 - [JS基础知识](document/js-base)
 - [JS面向对象](document/object-oriented)
 - **JS设计模式**
