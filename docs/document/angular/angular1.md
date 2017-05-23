@@ -108,5 +108,34 @@ $scope.nowDate = dateTime(nowDate,'yyyy/MM/dd HH:mm:ss');
 $scope.money = $filter('currency')(123);
 ```
 
+## 表单验证
 
+- 屏蔽浏览器的默认验证行为需要在form标签上添加`novalidate`属性
 
+- `todoForm.$valid` : form名称.$valid  true: 说明表单验证通过, false: 说明表单验证没有通过
+
+## $watch监听属性变化
+
+> 语法: `$scope.$watch(监听的属性,属性改变后的回调函数, 是否是引用监控(默认false))`
+
+```js
+angular.module('app',[]).controller('MainController',['$scope',function($scope){
+    $scope.arr = [];
+    $scope.text = '';
+
+    // 监听普通的属性
+    $scope.$watch('text',function(newV,oldV){
+        console.log(newV,oldV);
+    },false);
+
+    // 监听数组, 必须使用引用监控, 也就是第三个参数必须是true
+    $scope.$watch('arr',function(newV,oldV){
+        console.log(newV,oldV);
+    },true);
+
+    // Angular 1.1.4 出了`$watchCollection` 用来监控集合
+    $scope.$watchCollection('arr',function(newV,oldV){
+        console.log(newV,oldV);
+    })
+}]);
+```

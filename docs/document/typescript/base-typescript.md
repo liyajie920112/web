@@ -406,3 +406,5 @@ interface Math {
 ```bash
 npm install @types/node --save-dev
 ```
+
+[参考自https://ts.xcatliu.com](https://ts.xcatliu.com)

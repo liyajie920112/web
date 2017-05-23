@@ -10,7 +10,8 @@
     - [Git命令-V2](document/git/git02)
 - [Webpack](document/webpack/webpack)
 - [Gulp](document/gulp/gulp)
-- [Angular 1.x](document/angular/angular)
+- [Angular 1.x](document/angular/angular1)
+- [Angular 2.x](document/angular/angular2)
 - **TypeScript**
     - [TypeScript基础](document/typescript/base-typescript)
     - [TypeScript进阶](document/typescript/advance-typescript)
