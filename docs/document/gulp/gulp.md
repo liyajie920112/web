@@ -120,3 +120,15 @@ gulp.task('server',['build'],function(){
 // 指定gulp默认的任务, 这样直接使用gulp的时候就默认是gulp server
 gulp.task('default',['server']);
 ```
+
+## 处理命令行参数的包
+
+
+```bash
+npm install yargs
+```
+如
+```bash
+# production 就是命令的选项部分
+gulp -production
+```

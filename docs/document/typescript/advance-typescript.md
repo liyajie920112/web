@@ -291,4 +291,13 @@ let dog = new Dog('xiaoming'); // 报错, 错误如下
 
 ?> 如果我们把`private`改成`protected`就不会有语法错误
 
+### 设置类中变量的默认值
+
+```ts
+class Test {
+    name:string = 'liyajie';
+    age:number = 25;
+}
+```
+
 [参考自https://ts.xcatliu.com](https://ts.xcatliu.com)

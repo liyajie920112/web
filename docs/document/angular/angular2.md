@@ -242,6 +242,23 @@ RouterModule.forRoot([
 
 !> 配置好路由之后, 要使用路由必须要有`<router-outlet></router-outlet>`标签, 用来放路由匹配到的组件内容, 并且`a`链接需要这样导航`<a routerLink='/heroes'></a>`
 
+## 路由配置重定向
+
+需要使用`redirectTo`属性
+
+```ts
+imports : [
+    {
+        path:'',
+        redirectTo:'/index',// 重定向的页面, 注意, 这个路径也需要配置好, 否则重定向过去的时候会找不到
+        pathMatch:'full'
+    },{
+        path:'index',
+        component:ComponentName
+    }
+]
+```
+
 ### navigate
 
 ```ts
