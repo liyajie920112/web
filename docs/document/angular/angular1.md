@@ -1,4 +1,11 @@
+## Angular
+
+Angular是一个框架, 为了弥补原生html标签的不足
+
 ## Angular指令
+
+指令就是给原生的html标签添加一些自定义属性, 达到自己想要的效果.
+
 - ng-init
 - ng-app
 - ng-controller
@@ -8,11 +15,38 @@
 - ng-repeat
 - ng-class
 - ng-src
+    - 之所以使用ng-src, 因为如果我们直接使用src的话, 当html加载的时候就会取请求src后面的地址, 但是如果地址是插值语法的话, 则会报错, 找不到图片, 所以才会有ng-src属性.
 - ng-include
     - 使用Ajax获取到指定的模板内容, 插入到标签中
 - ng-transclude
     - 自定义标签指令中, 我们可以使用ng-transclude指定指令模板中的哪部分包含,哪部分不包含, 需要在自定义指令中使用`transclude:true|false`属性进行控制
 
+## Angular控制器
+
+创建一个控制器
+```js
+// 创建模块
+var app = angular.module('app',[]);
+// 创建控制器
+app.controller('MainController',['$scope',function($scope){
+    // 注意: 控制器也是绑定到$scope上的
+
+    this.name = 'liyajie'; // 在控制器的model上绑定一个name, this就是当前控制器
+    $scope.name = 'angular'; // 在$scope上绑定一个name
+    // ...
+}])
+```
+使用
+```html
+<div ng-app='app' ng-controller='MainController as mc'>
+    <!--也就是将mc绑定到$scope-->
+
+    <!--使用控制器上的name-->
+    <h1>{{ mc.name }}</h1>
+    <!--使用$scope上的name-->
+    <h2>{{ name }}</h2>
+</div>
+```
 
 ## Angular过滤器
 
