@@ -43,9 +43,10 @@
     5.2 严格模式下 报错
 
 06. 函数形参不能出现重名的情况
-    6.1 非严格模式下: `function sum(a,b,a){ console.log(a + b + a); }`//没问题
-    
+
+    6.1 非严格模式下: `function sum(a,b,a){ console.log(a + b + a); }`//没问题    
     6.2 严格模式下直接报错
+
 07. 不能使用callee - 函数本身 | caller - 函数调用者
 08. 不能使用eval 和 arguments作为函数或变量的名称
 
