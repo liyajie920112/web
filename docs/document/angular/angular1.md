@@ -84,6 +84,10 @@ app.directive('myDirective',function(){
 });
 ```
 
+## 自定义指令的作用域
+
+
+
 ## 自定义过滤器
 
 ```js
@@ -96,6 +100,25 @@ app.filter('testfilter',function(){
         return v;
     }
 })
+```
+
+## 跨域
+
+```js
+var app = angular.module('app',[]);
+app.controller('MainController',['$scope','$http',function($scope,$http){
+    $http({
+        url:'url地址'，
+        method:'jsonp',
+        params:{
+            callback:'JSON_CALLBACK' // angular-1.5.8
+        }
+    }).success(function(data){
+        console.log(data);
+    }).error(function(err){
+        console.log(err);
+    })
+}]);
 ```
 
 ## 服务Service
@@ -142,6 +165,56 @@ $scope.nowDate = dateTime(nowDate,'yyyy/MM/dd HH:mm:ss');
 $scope.money = $filter('currency')(123);
 ```
 
+## 自定义服务
+
+`value服务`
+
+```js
+var app = angular.module('app',[]);
+app.controller('MainController',['$scope','key',function($scope,key){
+    console.log(key); // liyajie
+}]);
+app.value('key','liyajie'); // 这样就设置了一个value服务， 类似于配置文件，一直不变的东西放到这里面
+```
+
+> factory方式自定义服务
+
+```js
+var app = angular.module('app',[]);
+
+app.controller('MainController',['$scope','formatDate',function($scope,formatDate){
+    $scope.currentDate = formatDate.formatDate();
+}])
+
+app.factory('formatDate',['$filter',function($filter){
+    function formatDate(){
+        var date = new Date();
+        var dfilter = $filter('date');
+        return dfilter(date,'yyyy-MM-dd HH:mm:ss');
+    }
+
+    return { formatDate: formatDate };
+}])
+```
+
+> service方式自定义服务
+
+```js
+var app = angular.module('app',[]);
+
+app.controller('MainController',['$scope','formatDate',function($scope,formatDate){
+    $scope.currentDate = formatDate.formatDate();
+}])
+
+app.service('formatDate',['$filter',function($filter){
+    this.formatDate = function(){
+        var date = new Date();
+        var dfilter = $filter('date');
+        return dfilter(date,'yyyy-MM-dd HH:mm:ss');
+    }
+}])
+```
+
 ## 表单验证
 
 - 屏蔽浏览器的默认验证行为需要在form标签上添加`novalidate`属性
@@ -173,3 +246,71 @@ angular.module('app',[]).controller('MainController',['$scope',function($scope){
     })
 }]);
 ```
+
+## 路由 angular-route
+
+加载过来的内容存放位置：
+
+```html
+<ng-view></ng-view>
+<!--或者-->
+<div ng-view></div>
+```
+
+```html
+<!--angular 1.5.8-->
+<script src="/js/angular.js"></script>
+<script src="/js/angular-route.js"></script>
+```
+
+```js
+var app = angular.module('app',['ngRoute']);
+app.controller('MainController','$routeParams',['$scope',function($scope,$routeParams){
+    console.log($routeParams); // 这里的这个服务就是路由后面的参数 { id : 2}
+}]);
+app.config(['$routeProvider',function($routeProvider){
+    $routeProvide.when('/home',{
+        template:'<h1>I am Home</h1>'
+    }).when('/about',{
+        template:'<h1>I am About</h1>'
+    }).when('/test/:id',{
+        template:'<h1>我有参数</h1>',
+        controller:'MainController'
+    }).otherwise({
+        redirectTo:'/home'
+    });
+}])
+```
+
+
+## AngularJs 1.5 和 1.6之间的差异
+
+### $http服务请求
+
+- 1.6之后的版本中的success和error方法已经去掉了
+- 跨域的时候不在需要`params:{ callback:'JSON_CALLBACK' }`
+- 跨域的时候需要配置白名单或者黑名单， 如下：
+```js
+app.config(['$sceDelegateProvider',function($sceDelegateProvider){
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'http://www.douban.com/**'
+    ])
+}]);
+```
+
+```js
+$http({
+    url:'',
+    method:'get'
+}).then(function(res){
+    // res是一个对象， 后台返回的数据存放到了data属性中
+    $scope.d = res.data;
+}).cache(function(error){
+    console.log(error);
+});
+```
+
+### angular-route
+
+angular-route中要使用导航的时候， 需要这样使用`<a href='#!/home'></a>`， href中需要使用`!/`
