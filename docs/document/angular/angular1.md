@@ -86,6 +86,56 @@ app.directive('myDirective',function(){
 
 ## 自定义指令的作用域
 
+默认自定义指令的作用域和父控制器的作用域是同一个， 当设置指令的`scope:true`的时候， 就会有了自己独立的作用域， 但是指令中的属性在没有和指令中的作用域中的属性绑定的时候还是会去父控制器的作用域中查找是否有该属性。当修改子控制器中的name的时候只会影响子控制器中的name, 不会影响父控制器中的name属性
+
+```js
+app.directive('test',function(){
+    return {
+        restrict:'EA',
+        template:'<h1>{{name}}</h1><input type="text" ng-model="name" />',
+        controller:function($scope){
+
+        },
+        scope:true // 独立作用域
+    }
+})
+```
+
+## 自定义指令传值
+
+- 父控制器向指令中传值通过属性
+- 指令中向父控制器中传值通过方法
+
+```js
+app.directive('test',function(){
+    return {
+        restrict:'EA',
+        template:'<h1>{{name}}</h1><input type="text" ng-model="name" />',
+        controller:function($scope){
+
+        },
+        scope:{
+            // 父控制器向指令中单项传值, 指令中修改该属性不会影响父控制器中作用域
+            // 等价于 name:'@name'
+            // 如果name:'=name2' , 那么向指令中传值的时候需要使用name2这个属性
+            name:'@', 
+
+            // 双向传值,指令中修改该属性也会影响父控制器中作用域
+            // 等价于 age:'=age'
+            // 如果age:'=age2' , 那么向指令中传值的时候需要使用age2这个属性
+            age:'=',
+            // 指令向父控制器作用域中传值
+            // 等价于 myclick:'&myclick'
+            // 如果myclick:'$clickMe' ， 那么说明父控制器中的方法名是clickMe
+            myclick:'&'
+        },
+        link:function($scope,ele,attrs){
+            // ele : jqLite对象, 如果在angular.js之前引入了jquery, 那么这个ele就是jquery对象
+            // attrs: 指令上的属性集合对象
+        }  
+    }
+})
+```
 
 
 ## 自定义过滤器
@@ -247,6 +297,16 @@ angular.module('app',[]).controller('MainController',['$scope',function($scope){
 }]);
 ```
 
+## 取消watch监听
+
+```js
+var unWatch = $scope.$watch('属性',function(newV,oldV){
+    // 如果要取消监听执行unWatch就可以
+});
+// 取消监听
+unWatch();
+```
+
 ## 路由 angular-route
 
 加载过来的内容存放位置：
@@ -314,3 +374,158 @@ $http({
 ### angular-route
 
 angular-route中要使用导航的时候， 需要这样使用`<a href='#!/home'></a>`， href中需要使用`!/`
+
+## 广播
+
+> 父控制器中向指令中广播， 使用`$broadcast`
+
+```js
+angular.module('app').controller('mainCtrl',['$scope',function($scope){
+    // 给指令发送一个广播
+    $scope.$broadcast('广播名称',{name:'liyajie'})
+
+    // 接收指令发来的广播
+    $scope.$on('广播名称',function(e,obj){
+        alert(obj.age);
+    })
+}])
+
+// 指令中接收广播
+angular.module('app').directive('test',function(){
+    return {
+        restrict:'EA',
+        template:'<h1>test</h1>',
+        controller:function($scope){
+            // 接收父控制器发来的广播
+            $scope.$on('广播名称',function(e,obj){
+                alert(obj.name)
+            })
+
+            // 发送广播到父控制器
+            $scope.$on('广播名称',{age:12});
+        }
+    }
+})
+```
+
+## angular-ui-router
+
+### 基本使用以及配置
+
+```html
+<ul>
+    <li><a ui-sref-active='active' ui-sref='one'>one</a></li>
+    <li><a ui-sref-active='active' ui-sref='two'>two</a></li>
+    <li><a ui-sref-active='active' ui-sref='three'>three</a></li>
+</ul>
+```
+
+```js
+angular.module('app',['ui.router']).controller('mainCtrl',['$scope',function($scope){
+
+}])
+// 配置angular-ui-router
+angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+    $stateProvider.state('one',{
+        url:'/one/:id',
+        template:'<h1>one</h1>',
+        controller:['$scope','$stateParams',function($scope,$stateParams){
+            console.log($stateParams);// 获取参数
+        }]
+    }).state('two',{
+        url:'/two',
+        template:'<h1>two</h1>'
+    }).state('three',{
+        url:'/three',
+        template:'<h1>three</h1>'
+    });
+    $urlRouterProvider.otherwise('two'); // 没有匹配到路由的情况下条状到 url:one的地址上去
+}])
+```
+
+### 多视图
+
+```html
+<div ui-view='header'></div>
+<div ui-view='left'></div>
+<div ui-view='right'></div>
+```
+
+```js
+angular.module('app',['ui.router']).controller('mainCtrl',['$scope',function($scope){
+
+}])
+
+angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+
+    $stateProvider.state('one',{
+        url:'one',
+        views:{
+            header:{
+                template:'<h1>header</h1>'
+            },
+            left:{
+                template:'<h1>left</h1>'
+            },
+            right:{
+                template:'<h1>right</h1>'
+            }
+        }
+    })
+
+    // 配置匹配不到路由的时候
+    $urlRouterProvider.otherwise('one');
+}])
+```
+
+### 多视图嵌套
+
+```html
+<div ui-view='header'></div>
+<div ui-view='left'></div>
+<div ui-view='right'></div>
+```
+
+```js
+angular.module('app',['ui.router']).controller('mainCtrl',['$scope',function($scope){
+
+}])
+
+angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+
+    $stateProvider.state('one',{
+        url:'one',
+        views:{
+            header:{
+                template:'<h1>header</h1>'
+            },
+            left:{
+                template:'<h1>left</h1>'
+            },
+            right:{ // 视图中嵌套视图
+                template:`
+                <ul>
+                    <li><a ui-sref='two.login'>login</a></li>
+                    <li><a ui-sref='two.reg'>reg</a></li>
+                </ul>
+                <div ui-view></div>
+                `
+            }
+        }
+    }).state('two',{
+        url:'/two',
+        template:'<h1>two</h1>'
+    }).state('two.login',{
+        url:'login',
+        template:'<h1>login</h1>'
+    }).state('two.reg',{
+        url:'reg',
+        template:'<h1>reg</h1>'
+    })
+
+    // 配置匹配不到路由的时候
+    $urlRouterProvider.otherwise('one');
+}])
+```
+
+
