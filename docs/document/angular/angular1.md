@@ -459,7 +459,7 @@ angular.module('app',['ui.router']).controller('mainCtrl',['$scope',function($sc
 angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
 
     $stateProvider.state('one',{
-        url:'one',
+        url:'/one',
         views:{
             header:{
                 template:'<h1>header</h1>'
@@ -487,8 +487,9 @@ angular.module('app').config(['$stateProvider','$urlRouterProvider',function($st
 ```
 
 ```js
-angular.module('app',['ui.router']).controller('mainCtrl',['$scope',function($scope){
-
+angular.module('app',['ui.router']).controller('mainCtrl',['$scope','$state',function($scope,$state){
+    // 跳转到指定的state , 也可以添加到主路由的控制器上。
+    $state.go('two.login');
 }])
 
 angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
@@ -514,7 +515,11 @@ angular.module('app').config(['$stateProvider','$urlRouterProvider',function($st
         }
     }).state('two',{
         url:'/two',
-        template:'<h1>two</h1>'
+        template:'<h1>two</h1>',
+        controller:['$scope','$state',function($scope,$state){
+            // 跳转到指定路由。
+            $state.go('two.reg');
+        }]
     }).state('two.login',{
         url:'login',
         template:'<h1>login</h1>'
@@ -525,7 +530,7 @@ angular.module('app').config(['$stateProvider','$urlRouterProvider',function($st
 
     // 配置匹配不到路由的时候
     $urlRouterProvider.otherwise('one');
-}])
+}]);
 ```
 
 
