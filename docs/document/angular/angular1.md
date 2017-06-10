@@ -533,4 +533,27 @@ angular.module('app').config(['$stateProvider','$urlRouterProvider',function($st
 }]);
 ```
 
+## $q.defer
 
+```js
+angular.module('app',[]).controller(['$scope','$http','$q',function($scope,$http,$q){
+    var def = $q.defer()
+    $http({
+        url:'',
+        method:'get'
+    }).then(function(data){
+        def.resolve(data)
+    }).catch(function(err){
+        def.reject(err)
+    })
+    def.promise.then(function(data){
+        console.log(data)
+    },function(err){
+        console.log(err)
+    },function(update){
+        console.log(update)
+    })
+}])
+```
+
+xq910612@163.com

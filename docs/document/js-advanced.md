@@ -64,3 +64,26 @@ console.log(f.getName());// liyajie
 f.setName('lihaojie');
 console.log(f.getName());// lihaojie
 ```
+
+## js派发一个事件
+
+?> 派发事件有个属性`event._constructed`
+
+```js
+function simulateClick() {
+  var event = new MouseEvent('click', {
+    'view': window,
+    'bubbles': true,
+    'cancelable': true
+  });
+  var cb = document.getElementById('checkbox'); 
+  var canceled = !cb.dispatchEvent(event);
+  if (canceled) {
+    // A handler called preventDefault.
+    alert("canceled");
+  } else {
+    // None of the handlers called preventDefault.
+    alert("not canceled");
+  }
+}
+```
