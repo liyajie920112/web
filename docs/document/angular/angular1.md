@@ -555,5 +555,3 @@ angular.module('app',[]).controller(['$scope','$http','$q',function($scope,$http
     })
 }])
 ```
-
-xq910612@163.com
