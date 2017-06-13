@@ -317,3 +317,104 @@ f();// 5
 document.getElementById('select').options(new Option('我是显示的文本', 1));
 ```
 
+### Http缓存与离线缓存
+
+[参考地址](http://www.cnblogs.com/zikai/p/4973355.html)
+
+Http缓存是当发送请求的时候, 发现已经存在缓存版本, 在默认使用缓存版本, 而不是取服务器提取这个文档.
+- 好处
+    - 减少了冗余数据的传输
+    - 减轻了服务器压力
+    - 提高了网页的加载速度
+
+### 离线缓存
+
+### 去除数组中重复的元素
+
+- 方式一
+
+```js
+var arr = [1,2,3,4,3,3,2,5]
+var map = new Map()
+arr.forEach((value,index) => {
+    map.set(value,index)
+})
+var newArr = Array.form(map.keys())
+console.log(newArr)
+```
+
+- 方式二
+
+```js
+var arr = [1,2,3,4,3,3,2,5]
+var newArr = []
+arr.forEach((value,index) => {
+    if(newArr.indexOf(value) == -1){
+        newArr.push(value)
+    }
+})
+console.log(newArr)
+```
+
+### 定义一个方法取解析url, 并返回解析后的对象
+
+```js
+function parseUrl(url) {
+    var a = document.createElement('a')
+    a.href = url;
+    return {
+        source: url, // 原始url
+        hostname: a.hostname, // 主机名
+        protocol: a.protocol.replace(':', ''), // 请求协议
+        port: a.port || 80, // 端口号
+        query: a.search, // 查询参数
+        path: a.pathname, // 路径
+        hash: a.hash, // 哈希值
+        params: (() => { // 将查询参数解析成对象
+            var q = a.search.substr(1)
+            var kv = q.split('&')
+            var obj = {}
+            kv.forEach((item, index) => {
+                var kvArr = item.split('=')
+                var k = kvArr[0]
+                var v = kvArr[1]
+                obj[k] = v
+            })
+            return obj
+        })()
+    }
+}
+var urlObj = parseUrl('https://www.baidu.com:90/search?name=liyajie&age=12#abc#bbb')
+console.log(urlObj)
+```
+
+### 使用flex布局实现一个上中下布局
+
+```html
+<div class='container'>
+    <div class='header'></div>
+    <div class='content'></div>
+    <div class='footer'></div>
+</div>
+```
+
+```css
+html,body{
+    height: 100%;
+}
+.container{
+    display:flex;
+    height: 100%;
+    flex-direction: column;
+}
+.container .header,
+.container .footer{
+    height: 50px;
+    width: 100%;
+    background-color: #0094ff;
+}
+.container .content{
+    flex: 1;
+    width: 100%;
+}
+```
