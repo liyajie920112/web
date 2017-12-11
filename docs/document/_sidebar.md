@@ -15,7 +15,7 @@
 - [Angular 1.x](document/angular/angular1)
 - [Angular 2.x](document/angular/angular2)
 - **React**
-    - [React](document/react/problem) 
+    - [React](document/react/index) 
 - **Vue**
     - [Vue](document/vue/vue)
     - [Vuex状态管理](document/vue/vuex)
