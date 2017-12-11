@@ -5,6 +5,8 @@
     - [CSS基本问题](document/css3/base)
 - **ES6**
     - [Class类&Allow Functions](document/es6/class)
+- **Android**
+    - [Android遇到的问题](document/android/problem)
 - **Git**
     - [Git命令-V1](document/git/git01)
     - [Git命令-V2](document/git/git02)
@@ -12,6 +14,8 @@
 - [Gulp](document/gulp/gulp)
 - [Angular 1.x](document/angular/angular1)
 - [Angular 2.x](document/angular/angular2)
+- **React**
+    - [React](document/react/problem) 
 - **Vue**
     - [Vue](document/vue/vue)
     - [Vuex状态管理](document/vue/vuex)
