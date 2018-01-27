@@ -77,4 +77,117 @@ public void goToSetting() {
 }
 ```
 
+## android使用远程图片
+
+```java
+private Handler handler = new Handler(); // 用于通知主线程修改ui
+
+private void initImage(final ImageView iv, final String imgurl) {
+	// 需要在子线程中加载远程图片
+	final Bitmap[] bitmap = {null};
+
+	final Runnable changeBanner = new Runnable() {
+	    @Override
+	    public void run() {
+		if (bitmap[0] != null) {
+		    iv.setImageBitmap(bitmap[0]);
+		}
+	    }
+	};
+
+	new Thread() {
+	    public void run() {
+		try {
+		    bitmap[0] = CommonUtils.getHttpBitmap(imgurl);
+		    handler.post(changeBanner); // 需要在主线程中更新ui
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    }
+	}.start();
+
+}
+```
+
+CommonUtils.getHttpBitmap() // 方法如下
+
+```java
+// url: 远程图片url, 如: http://2t.5068.com/uploads/allimg/120410/1140006131-3.jpg
+public static Bitmap getHttpBitmap(String url){
+	URL myFileURL;
+	Bitmap bitmap=null;
+	try{
+		myFileURL = new URL(url);
+		//获得连接
+		HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+		//设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+		conn.setConnectTimeout(6000);
+		//连接设置获得数据流
+		conn.setDoInput(true);
+		//不使用缓存
+		conn.setUseCaches(false);
+		//这句可有可无，没有影响
+		//conn.connect();
+		//得到数据流
+		InputStream is = conn.getInputStream();
+		//解析得到图片
+		bitmap = BitmapFactory.decodeStream(is);
+		//关闭数据流
+		is.close();
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	return bitmap;
+}
+```
+
+## Android打开相机和相册
+
+```java
+private final int REQUEST_TAKE_PHOTO = 1010; // 自定义即可
+private final int REQUEST_CHOOSE_PHOTO = 1011; // 自定义即可, 主要用户在用户拍完照或者选择图片之后回到当前Activity中指定onActivityResult方法的时候进行判断是拍照后过来的还是在相册中过来的
+// 打开相机
+Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);//跳转界面传回拍照所得数据
+
+// 打开相册
+Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+startActivityForResult(i, REQUEST_CHOOSE_PHOTO);
+```
+### 将选择好或者拍的照片展示到`ImageView`中
+```java
+// `data` -> `onActivityResult`方法形参中的 `Intent data`
+private void showYourPic(Intent data) {
+	Uri uri = data.getData();
+
+	Bitmap bitmap = null;
+	if (uri != null) {
+	    try {
+		bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
+	} else {
+	    Bundle bundle = data.getExtras(); // 有的型号的手机数据可能在Extra中
+	    bitmap = (Bitmap) bundle.get("data");
+	}
+
+	// 这里设置选择的图片
+	ByteArrayOutputStream baos = null;
+	try {
+	    baos = new ByteArrayOutputStream();
+	    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos); // 进行图片压缩, 100->则不压缩
+	} finally {
+	    try {
+		if (baos != null) {
+		    baos.close();
+		}
+	    } catch (Exception ee) {
+		ee.printStackTrace();
+	    }
+	}
+	ivImg.setImageBitmap(bitmap); // ivImg->获取到的ImageView
+}
+```
+
 持续更新...
