@@ -245,4 +245,49 @@ private static Bitmap compressImage(Bitmap image) {
 }
 ```
 
+## Android中创建Dialog
+
+```java
+private void showDialog(String content) {
+	final Dialog alertDialog = new Dialog(this, R.style.dialog1);
+	View view = LayoutInflater.from(this).inflate(
+			R.layout.order_alertdialog, null);
+	TextView alert_content = (TextView) view
+			.findViewById(R.id.alert_content);
+	Button bt_sure = (Button) view.findViewById(R.id.bt_sure);
+	alert_content.setText(content);
+	bt_sure.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			alertDialog.dismiss();
+		}
+	});
+	alertDialog.setCanceledOnTouchOutside(false);
+	alertDialog.setContentView(view);
+	alertDialog.show();
+}
+```
+
+R.style.dialog1内容如下(src/main/res/values/styles.xml)
+
+```xml
+<style name="dialog1" parent="@android:style/Theme.Dialog">
+	<item name="android:windowFrame">@null</item>
+	<item name="android:windowIsFloating">true</item>
+	<item name="android:windowIsTranslucent">false</item>
+	<item name="android:windowNoTitle">true</item>
+	<item name="android:background">@android:color/transparent</item>
+	<item name="android:backgroundDimEnabled">true</item>
+	<item name="android:windowBackground">@android:color/transparent</item>
+</style>
+```
+
+## Android去掉Dialog默认内边距
+
+```java
+Window window = mDialog.getWindow();
+window.getDecorView().setPadding(0, 0, 0, 0);
+window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+```
+
 持续更新...
