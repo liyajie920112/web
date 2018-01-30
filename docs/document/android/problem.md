@@ -77,7 +77,7 @@ public void goToSetting() {
 }
 ```
 
-## android使用远程图片
+## 4. android使用远程图片
 
 ```java
 private Handler handler = new Handler(); // 用于通知主线程修改ui
@@ -141,7 +141,7 @@ public static Bitmap getHttpBitmap(String url){
 }
 ```
 
-## Android使用远程图片优化
+## 5. Android使用远程图片优化
 
 ```java
 package com.hbyc.horseinfo.activity.pay;
@@ -482,7 +482,7 @@ public class ImageLoader {
 }
 ```
 
-## Android打开相机和相册
+## 6. Android打开相机和相册
 
 ```java
 private final int REQUEST_TAKE_PHOTO = 1010; // 自定义即可
@@ -531,7 +531,7 @@ private void showYourPic(Intent data) {
 }
 ```
 
-## Android图片压缩
+## 7. Android图片压缩
 
 ```java
 public static Bitmap comp(Bitmap image) {
@@ -586,7 +586,7 @@ private static Bitmap compressImage(Bitmap image) {
 }
 ```
 
-## Android中创建Dialog
+## 8. Android中创建Dialog
 
 ```java
 private void showDialog(String content) {
@@ -623,12 +623,45 @@ R.style.dialog1内容如下(src/main/res/values/styles.xml)
 </style>
 ```
 
-## Android去掉Dialog默认内边距
+## 9. Android去掉Dialog默认内边距
 
 ```java
 Window window = mDialog.getWindow();
 window.getDecorView().setPadding(0, 0, 0, 0);
 window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+```
+
+## 10. Android定时器Timer使用
+
+```java
+Timer timer = new Timer();
+Handler handler = new Handler(Looper.getMainLooper());
+TimerTask task = new TimerTask() {
+    @Override
+    public void run() {
+	handler.post(new Runnable() { // 要在主线程中执行
+	    @Override
+	    public void run() {
+		// 发起请求, 检查支付状态
+		RequestUtil.checkoutPayStatus(context, out_trade_no, new JsonGetCallback() {
+
+		    @Override
+		    public void getNetString(String str) {
+			String status = JsonUtil.getStrValue(str, "status");
+			if (status.equals("1")) {
+			    dialog.dismiss();
+			    Activity a = (Activity) context;
+			    a.finish();
+			    ToastUtil.shortToast(context, "支付成功");
+			}
+		    }
+		});
+	    }
+	});
+
+    }
+};
+timer.schedule(task, 10 * 1000, 5 * 1000); // 十秒后执行第一次, 之后每隔5s执行一次
 ```
 
 持续更新...
