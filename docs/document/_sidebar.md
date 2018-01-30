@@ -6,7 +6,7 @@
 - **ES6**
     - [Class类&Allow Functions](document/es6/class)
 - **Android**
-    - [Android遇到的问题](document/android/problem)
+    - [Android遇到的问题](document/android/problem)
 - **Git**
     - [Git命令-V1](document/git/git01)
     - [Git命令-V2](document/git/git02)
