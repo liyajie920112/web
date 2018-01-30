@@ -16,8 +16,7 @@
     - [Vue](document/vue/vue)
     - [Vuex状态管理](document/vue/vuex)
 - **Android**
-
-    - [Android中遇到的问题](document/android/problem)
+    - [Android中遇到的问题](document/android/problem)
 - **TypeScript**
     - [TypeScript基础](document/typescript/base-typescript)
     - [TypeScript进阶](document/typescript/advance-typescript)
