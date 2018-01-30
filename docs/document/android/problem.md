@@ -141,6 +141,347 @@ public static Bitmap getHttpBitmap(String url){
 }
 ```
 
+## Android使用远程图片优化
+
+```java
+package com.hbyc.horseinfo.activity.pay;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.ImageView;
+@SuppressLint("HandlerLeak")
+@SuppressWarnings("unused")
+public class ImageLoader {
+
+	// LinkedHashMap集合
+	MemoryCache memoryCache = new MemoryCache();
+	// 一个线程池
+	ExecutorService executorService;
+	// 文件缓存
+	FileCache fileCache;
+	// 弱引用的集合
+	private Map<ImageView, String> imageViews = Collections
+			.synchronizedMap(new WeakHashMap<ImageView, String>());
+	private int stub_id;
+	private static Context mContext;
+
+	// 单例模式
+	private static ImageLoader loader;
+	private Bitmap bitmap;
+
+	// 回调接口
+	public interface ImageCallBack {
+		public void loadImage(Bitmap bitmap);
+	}
+
+	public static ImageLoader getInstance(Context context) {
+		mContext = context;
+		if (loader == null) {
+			loader = new ImageLoader(context);
+		}
+		return loader;
+	}
+
+	// 私有的构造方法
+	private ImageLoader(Context context) {
+		fileCache = new FileCache(context);
+		executorService = Executors.newFixedThreadPool(5);
+	}
+
+	// 显示图片
+	public void displayImage(String url, ImageView imageView) {
+		// 先将地址和imageView的键值对放入到弱引用的集合中
+		imageViews.put(imageView, url);
+		// 从内存缓存中拿缓存
+		bitmap = memoryCache.get(url);
+		if (bitmap != null) {
+			imageView.setImageBitmap(bitmap);
+		} else {
+			// 如果缓存不存在
+			queuePhoto(url, imageView);
+			imageView.setImageResource(getStub_id());
+		}
+	}
+
+	// 生成圆角图片
+	public static Bitmap GetRoundedCornerBitmap(Bitmap bitmap) {
+		try {
+			Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+					bitmap.getHeight(), Config.ARGB_8888);
+			Canvas canvas = new Canvas(output);
+			final Paint paint = new Paint();
+			final Rect rect = new Rect(0, 0, bitmap.getWidth(),
+					bitmap.getHeight());
+			final RectF rectF = new RectF(new Rect(0, 0, bitmap.getWidth(),
+					bitmap.getHeight()));
+			final float roundPx = 10;
+			paint.setAntiAlias(true);
+			canvas.drawARGB(0, 0, 0, 0);
+			paint.setColor(Color.BLACK);
+			canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+			paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+			final Rect src = new Rect(0, 0, bitmap.getWidth(),
+					bitmap.getHeight());
+			canvas.drawBitmap(bitmap, src, rect, paint);
+			return output;
+		} catch (Exception e) {
+			return bitmap;
+		}
+	}
+
+	public void displayImage(String url, ImageView imageView, int stud_id) {
+		setStub_id(stud_id);
+		displayImage(url, imageView);
+	}
+
+	//
+	private void queuePhoto(String url, ImageView imageView) {
+		PhotoToLoad p = new PhotoToLoad(url, imageView);
+		executorService.submit(new PhotosLoader(p));
+	}
+
+	// 联网下载图片的方法, 被 PhotosLoader 线程对象调用
+	public Bitmap getBitmap(String url) {
+		// 从文件缓存中拿文件
+		File f = fileCache.getFile(url);
+		// Bitmap b = decodeFile(f);
+		Bitmap b = compressImageFromFile(f);
+		if (b != null) {
+			return b;
+		}
+		// 文件缓存中不存在,就联网获得文件
+		try {
+			Bitmap bitmap = null;
+			URL imageUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) imageUrl
+					.openConnection();
+			conn.setConnectTimeout(30000);
+			conn.setReadTimeout(30000);
+			conn.setInstanceFollowRedirects(true);
+			InputStream is = conn.getInputStream();
+			OutputStream os = new FileOutputStream(f);
+			CopyStream(is, os);
+			os.close();
+			// bitmap = decodeFile(f);
+			bitmap = compressImageFromFile(f);
+			return bitmap;
+		} catch (Exception ex) {
+			//ex.printStackTrace();
+			return null;
+		}
+	}
+
+	// 压缩图片
+	private Bitmap compressImageFromFile(File f) {
+		BitmapFactory.Options newOpts = new BitmapFactory.Options();
+		newOpts.inJustDecodeBounds = true;// 只读边,不读内容
+		Bitmap bitmap;
+		try {
+
+			if (!f.exists()) {
+				return null;
+			} else {
+				bitmap = BitmapFactory.decodeStream(new FileInputStream(f),
+						null, newOpts);
+
+				newOpts.inJustDecodeBounds = false;
+				int w = newOpts.outWidth;
+				int h = newOpts.outHeight;
+				float hh = 800f;//
+				float ww = 480f;//
+				int be = 1;
+				if (w > h && w > ww) {
+					be = (int) (newOpts.outWidth / ww);
+				} else if (w < h && h > hh) {
+					be = (int) (newOpts.outHeight / hh);
+				}
+				if (be <= 0)
+					be = 1;
+				newOpts.inSampleSize = be;// 设置采样率
+
+				newOpts.inPreferredConfig = Config.ARGB_8888;// 该模式是默认的,可不设
+				newOpts.inPurgeable = true;// 同时设置才会有效
+				newOpts.inInputShareable = true;// 。当系统内存不够时候图片自动被回收
+
+				bitmap = BitmapFactory.decodeStream(new FileInputStream(f),
+						null, newOpts);
+
+				// return compressBmpFromBmp(bitmap);//原来的方法调用了这个方法企图进行二次压缩
+				// 其实是无效的,大家尽管尝试
+				return bitmap;
+
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public Bitmap decodeFile(File f) {
+		try {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+
+			options.inSampleSize = 1;
+			int outWidth = options.outWidth;
+			int outHeight = options.outHeight;
+			options.inJustDecodeBounds = false;
+			options.inPreferredConfig = Bitmap.Config.RGB_565;
+			options.inPurgeable = true;
+			options.inInputShareable = true;
+			return BitmapFactory.decodeStream(new FileInputStream(f), null,
+					options);
+		} catch (FileNotFoundException e) {
+		}
+		return null;
+	}
+
+	/**
+	 * 下载图片的线程对象
+	 * 
+	 * @author JinnyZh
+	 */
+	class PhotosLoader implements Runnable {
+		PhotoToLoad photoToLoad;
+
+		PhotosLoader(PhotoToLoad photoToLoad) {
+			this.photoToLoad = photoToLoad;
+		}
+
+		@Override
+		public void run() {
+			// 如果这个地址和imageView的键值对在软引用的集合中不存在,直接返回
+			if (imageViewReused(photoToLoad)) {
+				return;
+			}
+			Bitmap bmp = getBitmap(photoToLoad.url);
+			if (bmp != null) {
+//				bmp = GetRoundedCornerBitmap(bmp);
+			}
+			memoryCache.put(photoToLoad.url, bmp);
+			if (imageViewReused(photoToLoad))
+				return;
+			BitmapDisplayer bd = new BitmapDisplayer(bmp, photoToLoad);
+			Activity a = (Activity) photoToLoad.imageView.getContext();
+			a.runOnUiThread(bd);
+		}
+	}
+
+	public void getBitmapAsync(final String url, final ImageCallBack callback) {
+		final Handler handler = new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.obj != null) {
+					Bitmap bitmap = (Bitmap) msg.obj;
+					callback.loadImage(bitmap);
+				}
+			};
+		};
+
+		new Thread() {
+			public void run() {
+				Message msg = Message.obtain();
+				msg.obj = getBitmap(url);
+				handler.sendMessage(msg);
+			};
+		}.start();
+	}
+
+	/**
+	 * 查看软引用集合中是否存在该 imageView 和 url 的键值对,
+	 * 
+	 * @param photoToLoad
+	 * @return 没有,就返回true
+	 */
+	boolean imageViewReused(PhotoToLoad photoToLoad) {
+		String tag = imageViews.get(photoToLoad.imageView);
+		if (tag == null || !tag.equals(photoToLoad.url)) {
+			return true;
+		}
+		return false;
+	}
+
+	class BitmapDisplayer implements Runnable {
+		Bitmap bitmap;
+		PhotoToLoad photoToLoad;
+
+		public BitmapDisplayer(Bitmap b, PhotoToLoad p) {
+			bitmap = b;
+			photoToLoad = p;
+		}
+
+		public void run() {
+			if (imageViewReused(photoToLoad))
+				return;
+			if (bitmap != null)
+				photoToLoad.imageView.setImageBitmap(bitmap);
+			else
+				photoToLoad.imageView.setImageResource(getStub_id());
+		}
+	}
+
+	public void clearCache() {
+		memoryCache.clear();
+		fileCache.clear();
+	}
+
+	public void clearMemoryCache() {
+		memoryCache.clear();
+	}
+
+	public static void CopyStream(InputStream is, OutputStream os) {
+		final int buffer_size = 1024;
+		try {
+			byte[] bytes = new byte[buffer_size];
+			for (;;) {
+				int count = is.read(bytes, 0, buffer_size);
+				if (count == -1)
+					break;
+				os.write(bytes, 0, count);
+			}
+		} catch (Exception ex) {
+		}
+	}
+
+	public void setStub_id(int stub_id) {
+		this.stub_id = stub_id;
+	}
+
+	public int getStub_id() {
+		return stub_id;
+	}
+}
+```
+
 ## Android打开相机和相册
 
 ```java
