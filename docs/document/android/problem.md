@@ -603,6 +603,15 @@ private void showDialog(String content) {
 			alertDialog.dismiss();
 		}
 	});
+	Window window = alertDialog.getWindow();
+	// 去掉dialog默认padding
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.dimAmount = 1f; // 设置灰暗度为1, 表示为黑色
+        wl.alpha = 1f; // 设置成不透明
+        window.setAttributes(wl);
+	// 必须设置下面这一行才可以全屏
+	window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 	alertDialog.setCanceledOnTouchOutside(false);
 	alertDialog.setContentView(view);
 	alertDialog.show();
