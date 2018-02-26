@@ -1,4 +1,6 @@
 - [文档简介]()
+- **算法**
+    - [排序算法](document/algorithm-sort)
 - **CSS3**
     - [media查询](document/css3/media)
     - [Flex布局](document/css3/flex)
