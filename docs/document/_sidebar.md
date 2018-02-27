@@ -1,4 +1,6 @@
 - [文档简介]()
+- **数据结构**
+    - [数据结构](document/data-struct)
 - **算法**
     - [排序算法](document/algorithm-sort)
 - **CSS3**
