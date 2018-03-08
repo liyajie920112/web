@@ -68,3 +68,25 @@ function insertionSort(arr) {
   }
 }
 ```
+
+## 冒泡排序
+
+> 思路：拿第一个元素和后面相邻元素做比较，如果大于后面的元素则进行交换，否则不用交换，再拿第二个元素和后面的比较重复上一轮的操作
+
+```js
+function bubbleSort(arr) {
+  for(var i = 0, len = arr.length - 1; i < len; i++) {
+    for(var j = 0, len2 = arr.length - 1 - i; j < len2; j++) {
+      if(arr[j] > arr[j + 1]) {
+        // 交换两个元素的位置
+        var temp = arr[j]
+        arr[j] = arr[j + 1]
+        arr[j + 1] = temp
+      }
+    }
+  }
+  console.log(arr) // 已经是有序数组了
+}
+```
+
+?> 外层循环是每次比较的次数，内层循环是从哪个位置开始比较，比较几次
