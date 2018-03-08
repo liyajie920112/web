@@ -1,6 +1,6 @@
 # 原型链
 
-![](/document/images/prototype-img.jpeg)
+![](/images/prototype-img.jpeg)
 
 ```js
 function Person(){}
