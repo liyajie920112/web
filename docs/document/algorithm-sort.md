@@ -90,3 +90,37 @@ function bubbleSort(arr) {
 ```
 
 ?> 外层循环是每次比较的次数，内层循环是从哪个位置开始比较，比较几次
+
+## 快速排序 O(NLogn)
+
+```js
+function quickSort(arr) {
+  // 这是结束递归的条件，当数组中只有一个元素的时候返回
+  if(arr.length <= 1) return arr;
+
+  // 查找基准数索引
+  var povitIndex = Math.floor(arr.length / 2);
+
+  // 删除基准数并记录基准数
+  var povit = arr.splice(povitIndex, 1)[0]
+
+  // 定义两个空数组，将小于基准数的元素放到left数组中，大于基准数的元素放到right中
+  var left = [];
+  var right = [];
+
+  for(var i = 0, len = arr.length; i < len; i++) {
+    if(arr[i] > povit) {
+      right.push(arr[i])
+    } else {
+      left.push(arr[i])
+    }
+  }
+  // 递归执行该函数
+
+  return quickSort(left).concat(povit, quickSort(right))
+}
+
+var arr = [1,4,6,3,2,8]
+var newArr = quickSort(arr)
+console.log(newArr)
+```
